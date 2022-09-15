@@ -1,0 +1,49 @@
+[*********************************************************************************
+ * Copyright (c) 2022 University of York and others
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *   William Barnett - initial definition
+ ********************************************************************************]
+[% 	import "../scripts/common/util.eol";
+
+	var tplState: Template = TemplateFactory.load("../templates/State.egl"); 
+	
+//Junction
+if ( node.isTypeOf(Junction) ){
+	var junction = node;
+    %]junction [%=junction.name%] [%
+    
+// Initial	
+} else if ( node.isTypeOf(Initial) ){
+	var initial = node;
+    %]initial [%=initial.name%] [%
+    
+// State
+} else if ( node.isTypeOf(State) ){
+	var state = node;
+	tplState.populate("state", state);
+	out.println( tplState.process() );
+
+// Final
+} else if ( node.isTypeOf(Final) ){
+	var final = node;
+	%]final [%=final.name%] [%
+	out.println();
+
+/* NodeNameRef - TODO 
+ * Although this is shown in the epackage viewer it doesn't appear to be in the 
+ * metamodel. */
+//} else if ( node.isTypeOf(NodeNameRef) ) {
+
+} else {
+	//Shouldn't reach here.
+	ErrorExecutedUnreachableSection( node.type() );
+}
+	
+%]

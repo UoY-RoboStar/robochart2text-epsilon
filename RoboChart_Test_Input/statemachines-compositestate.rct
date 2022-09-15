@@ -1,0 +1,36 @@
+package statemachines::compositestate 
+
+stm Composite {
+state s0 {
+		initial i0
+		state cs0 {
+		}
+		state cs1 {
+		}
+		transition cinitialTOcs0 {
+			from i0
+			to cs0
+		}
+		transition cs0TOcs1 {
+			from cs0
+			to cs1
+		}
+	}
+	state s1 {
+	}
+	initial i0
+	final f0
+	transition initialTOs0 {
+		from i0
+		to s0
+	}
+	transition s0TOs1 {
+		from s0
+		to s1
+	}
+	transition s1TOfinal {
+		from s1
+		to f0
+	}
+}
+

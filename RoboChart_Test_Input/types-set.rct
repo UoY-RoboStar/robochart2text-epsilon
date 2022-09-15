@@ -1,0 +1,4 @@
+package types::set 
+
+type Velocity
+record RecordWithSet { collection : Set( int ) simple : int }

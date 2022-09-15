@@ -1,0 +1,19 @@
+package controllers::onewithinterfaces interface IfcR {
+	move ( z : int , y : int )
+}
+
+interface IfcD {
+	event e1 : real
+	event e2
+}
+
+interface IfcD2 {
+	event e3 : int
+} 
+
+controller CtrlWithInterfaces {
+	uses IfcD
+	uses IfcD2 
+	requires IfcR 
+}
+

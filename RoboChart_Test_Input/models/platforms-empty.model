@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="ASCII"?>
+<robochart:RCPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:robochart="http://www.robocalc.circus/RoboChart" name="platforms::empty">
+  <robots name="emptyplatform"/>
+</robochart:RCPackage>

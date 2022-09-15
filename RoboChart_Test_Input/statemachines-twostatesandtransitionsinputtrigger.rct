@@ -1,0 +1,22 @@
+package statemachines::twostatesandtransitionsinputtrigger
+
+stm StmA {
+	event eventIn : int
+	event eventOut : int
+	
+	var localx : int
+	
+	state s0 {
+	}
+	state s1 {
+	}
+
+	transition s1tos0 {
+		from s1
+		to s0
+		trigger eventIn ? localx
+	}
+	
+	
+}
+

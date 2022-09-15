@@ -1,0 +1,15 @@
+package statemachines::twostatesandtransitionactionevent
+
+stm StmA {
+event event1
+	state s0 {
+	}
+	state s1 {
+	}
+	transition s0tos1 {
+		from s0
+		to s1
+		action event1
+	}
+}
+

@@ -1,0 +1,8 @@
+package modules::controllerref
+
+module System {
+	cref ctrl_ref0 = Control
+}
+
+controller Control {
+}

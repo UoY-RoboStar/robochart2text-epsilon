@@ -1,0 +1,11 @@
+package modules::roboticplatformref
+
+module System {
+
+	rref rp_ref0 = Simple
+
+}
+
+robotic platform Simple {
+}
+

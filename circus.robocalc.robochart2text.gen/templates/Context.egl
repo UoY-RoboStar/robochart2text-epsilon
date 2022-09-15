@@ -1,0 +1,53 @@
+[*********************************************************************************
+ * Copyright (c) 2022 University of York and others
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *   William Barnett - initial definition
+ ********************************************************************************]
+[%
+	var tplEvent: Template = TemplateFactory.load("../templates/Event.egl"); 	
+	var tplOperationsSig: Template = TemplateFactory.load("../templates/OperationSig.egl"); 	
+	var tplVariableList: Template = TemplateFactory.load("../templates/VariableList.egl"); 	
+	var tplClock: Template = TemplateFactory.load("../templates/Clock.egl"); 
+%]
+[*- Events *]
+[% for (ev: Event in context.events) {
+   		tplEvent.populate("event", ev);
+ 		out.println( tplEvent.process() );
+    } %]
+[*- Interfaces *]
+[% for (ifc: Interface in context.interfaces) {
+   		%]uses [%=ifc.name%] [%
+   		out.println();
+    } %]
+[*- Provided Interfaces *]
+[% for (pifc: Interface in context.pInterfaces) {
+   		%]provides [%=pifc.name%] [%
+   		out.println();
+    } %]
+[*- Required Interfaces *]
+[% for (rifc: Interface in context.rInterfaces) {
+   		%]requires [%=rifc.name%] [%
+   		out.println();
+    } %]
+[*- Operations *]
+[% for (op: OperationSig in context.operations) {
+   		tplOperationsSig.populate("operationsig", op);
+ 		out.println( tplOperationsSig.process() );
+    } %]
+[*- Variable List *]
+[% for (vl: VariableList in context.variableList) {
+   		tplVariableList.populate("variablelist", vl);
+ 		out.println( tplVariableList.process() ); 
+    } %]
+[*- Clocks *]
+[% for (clk: Clock in context.clocks) {
+   		tplClock.populate("clock", clk);
+ 		out.println( tplClock.process() );
+    } %]

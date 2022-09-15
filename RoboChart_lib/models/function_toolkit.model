@@ -1,0 +1,426 @@
+<?xml version="1.0" encoding="ASCII"?>
+<robochart:RCPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:robochart="http://www.robocalc.circus/RoboChart" name="function_toolkit">
+  <imports importedNamespace="relation_toolkit::*"/>
+  <imports importedNamespace="set_toolkit::*"/>
+  <functions name="isTotal">
+    <type xsi:type="robochart:TypeRef">
+      <ref xsi:type="robochart:PrimitiveType" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/core.rct#//@types.3"/>
+    </type>
+    <parameters name="f">
+      <type xsi:type="robochart:FunctionType">
+        <domain xsi:type="robochart:AnyType" identifier="X"/>
+        <range xsi:type="robochart:AnyType" identifier="Y"/>
+      </type>
+    </parameters>
+    <postconditions xsi:type="robochart:Iff">
+      <left xsi:type="robochart:ResultExp"/>
+      <right xsi:type="robochart:ParExp">
+        <exp xsi:type="robochart:Forall">
+          <variables name="x">
+            <type xsi:type="robochart:AnyType" identifier="X"/>
+          </variables>
+          <predicate xsi:type="robochart:Exists">
+            <variables name="y">
+              <type xsi:type="robochart:AnyType" identifier="Y"/>
+            </variables>
+            <predicate xsi:type="robochart:InExp">
+              <member xsi:type="robochart:TupleExp">
+                <values xsi:type="robochart:RefExp" ref="//@functions.0/@postconditions.0/@right/@exp/@variables.0"/>
+                <values xsi:type="robochart:RefExp" ref="//@functions.0/@postconditions.0/@right/@exp/@predicate/@variables.0"/>
+              </member>
+              <set xsi:type="robochart:RefExp" ref="//@functions.0/@parameters.0"/>
+            </predicate>
+          </predicate>
+        </exp>
+      </right>
+    </postconditions>
+  </functions>
+  <functions name="isInjection">
+    <type xsi:type="robochart:TypeRef">
+      <ref xsi:type="robochart:PrimitiveType" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/core.rct#//@types.3"/>
+    </type>
+    <parameters name="f">
+      <type xsi:type="robochart:FunctionType">
+        <domain xsi:type="robochart:AnyType" identifier="X"/>
+        <range xsi:type="robochart:AnyType" identifier="Y"/>
+      </type>
+    </parameters>
+    <postconditions xsi:type="robochart:Iff">
+      <left xsi:type="robochart:ResultExp"/>
+      <right xsi:type="robochart:ParExp">
+        <exp xsi:type="robochart:Forall">
+          <variables name="p">
+            <type xsi:type="robochart:ProductType">
+              <types xsi:type="robochart:AnyType" identifier="X"/>
+              <types xsi:type="robochart:AnyType" identifier="Y"/>
+            </type>
+          </variables>
+          <variables name="q">
+            <type xsi:type="robochart:ProductType">
+              <types xsi:type="robochart:AnyType" identifier="X"/>
+              <types xsi:type="robochart:AnyType" identifier="Y"/>
+            </type>
+          </variables>
+          <suchthat xsi:type="robochart:And">
+            <left xsi:type="robochart:InExp">
+              <member xsi:type="robochart:RefExp" ref="//@functions.1/@postconditions.0/@right/@exp/@variables.0"/>
+              <set xsi:type="robochart:RefExp" ref="//@functions.1/@parameters.0"/>
+            </left>
+            <right xsi:type="robochart:InExp">
+              <member xsi:type="robochart:RefExp" ref="//@functions.1/@postconditions.0/@right/@exp/@variables.1"/>
+              <set xsi:type="robochart:RefExp" ref="//@functions.1/@parameters.0"/>
+            </right>
+          </suchthat>
+          <predicate xsi:type="robochart:Iff">
+            <left xsi:type="robochart:Equals">
+              <left xsi:type="robochart:ArrayExp">
+                <value xsi:type="robochart:RefExp" ref="//@functions.1/@postconditions.0/@right/@exp/@variables.0"/>
+                <parameters xsi:type="robochart:IntegerExp" value="1"/>
+              </left>
+              <right xsi:type="robochart:ArrayExp">
+                <value xsi:type="robochart:RefExp" ref="//@functions.1/@postconditions.0/@right/@exp/@variables.1"/>
+                <parameters xsi:type="robochart:IntegerExp" value="1"/>
+              </right>
+            </left>
+            <right xsi:type="robochart:Equals">
+              <left xsi:type="robochart:ArrayExp">
+                <value xsi:type="robochart:RefExp" ref="//@functions.1/@postconditions.0/@right/@exp/@variables.0"/>
+                <parameters xsi:type="robochart:IntegerExp" value="2"/>
+              </left>
+              <right xsi:type="robochart:ArrayExp">
+                <value xsi:type="robochart:RefExp" ref="//@functions.1/@postconditions.0/@right/@exp/@variables.1"/>
+                <parameters xsi:type="robochart:IntegerExp" value="2"/>
+              </right>
+            </right>
+          </predicate>
+        </exp>
+      </right>
+    </postconditions>
+  </functions>
+  <functions name="isTotalInjection">
+    <type xsi:type="robochart:TypeRef">
+      <ref xsi:type="robochart:PrimitiveType" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/core.rct#//@types.3"/>
+    </type>
+    <parameters name="f">
+      <type xsi:type="robochart:FunctionType">
+        <domain xsi:type="robochart:AnyType" identifier="X"/>
+        <range xsi:type="robochart:AnyType" identifier="Y"/>
+      </type>
+    </parameters>
+    <postconditions xsi:type="robochart:Iff">
+      <left xsi:type="robochart:ResultExp"/>
+      <right xsi:type="robochart:And">
+        <left xsi:type="robochart:CallExp">
+          <function xsi:type="robochart:RefExp" ref="//@functions.0"/>
+          <args xsi:type="robochart:RefExp" ref="//@functions.2/@parameters.0"/>
+        </left>
+        <right xsi:type="robochart:CallExp">
+          <function xsi:type="robochart:RefExp" ref="//@functions.1"/>
+          <args xsi:type="robochart:RefExp" ref="//@functions.2/@parameters.0"/>
+        </right>
+      </right>
+    </postconditions>
+  </functions>
+  <functions name="isSurjection">
+    <type xsi:type="robochart:TypeRef">
+      <ref xsi:type="robochart:PrimitiveType" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/core.rct#//@types.3"/>
+    </type>
+    <parameters name="f">
+      <type xsi:type="robochart:FunctionType">
+        <domain xsi:type="robochart:AnyType" identifier="X"/>
+        <range xsi:type="robochart:AnyType" identifier="Y"/>
+      </type>
+    </parameters>
+    <postconditions xsi:type="robochart:Iff">
+      <left xsi:type="robochart:ResultExp"/>
+      <right xsi:type="robochart:ParExp">
+        <exp xsi:type="robochart:Equals">
+          <left xsi:type="robochart:CallExp">
+            <function xsi:type="robochart:RefExp">
+              <ref xsi:type="robochart:Function" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/relation_toolkit.rct#//@functions.4"/>
+            </function>
+            <args xsi:type="robochart:RefExp" ref="//@functions.3/@parameters.0"/>
+          </left>
+          <right xsi:type="robochart:SetComp">
+            <variables name="y">
+              <type xsi:type="robochart:AnyType" identifier="Y"/>
+            </variables>
+          </right>
+        </exp>
+      </right>
+    </postconditions>
+  </functions>
+  <functions name="isTotalSurjection">
+    <type xsi:type="robochart:TypeRef">
+      <ref xsi:type="robochart:PrimitiveType" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/core.rct#//@types.3"/>
+    </type>
+    <parameters name="f">
+      <type xsi:type="robochart:FunctionType">
+        <domain xsi:type="robochart:AnyType" identifier="X"/>
+        <range xsi:type="robochart:AnyType" identifier="Y"/>
+      </type>
+    </parameters>
+    <postconditions xsi:type="robochart:Iff">
+      <left xsi:type="robochart:ResultExp"/>
+      <right xsi:type="robochart:And">
+        <left xsi:type="robochart:CallExp">
+          <function xsi:type="robochart:RefExp" ref="//@functions.0"/>
+          <args xsi:type="robochart:RefExp" ref="//@functions.4/@parameters.0"/>
+        </left>
+        <right xsi:type="robochart:CallExp">
+          <function xsi:type="robochart:RefExp" ref="//@functions.3"/>
+          <args xsi:type="robochart:RefExp" ref="//@functions.4/@parameters.0"/>
+        </right>
+      </right>
+    </postconditions>
+  </functions>
+  <functions name="isBijection">
+    <type xsi:type="robochart:TypeRef">
+      <ref xsi:type="robochart:PrimitiveType" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/core.rct#//@types.3"/>
+    </type>
+    <parameters name="f">
+      <type xsi:type="robochart:FunctionType">
+        <domain xsi:type="robochart:AnyType" identifier="X"/>
+        <range xsi:type="robochart:AnyType" identifier="Y"/>
+      </type>
+    </parameters>
+    <postconditions xsi:type="robochart:Iff">
+      <left xsi:type="robochart:ResultExp"/>
+      <right xsi:type="robochart:And">
+        <left xsi:type="robochart:CallExp">
+          <function xsi:type="robochart:RefExp" ref="//@functions.2"/>
+          <args xsi:type="robochart:RefExp" ref="//@functions.5/@parameters.0"/>
+        </left>
+        <right xsi:type="robochart:CallExp">
+          <function xsi:type="robochart:RefExp" ref="//@functions.4"/>
+          <args xsi:type="robochart:RefExp" ref="//@functions.5/@parameters.0"/>
+        </right>
+      </right>
+    </postconditions>
+  </functions>
+  <functions name="isFinite">
+    <type xsi:type="robochart:TypeRef">
+      <ref xsi:type="robochart:PrimitiveType" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/core.rct#//@types.3"/>
+    </type>
+    <parameters name="s">
+      <type xsi:type="robochart:SetType">
+        <domain xsi:type="robochart:AnyType" identifier="X"/>
+      </type>
+    </parameters>
+    <postconditions xsi:type="robochart:Iff">
+      <left xsi:type="robochart:ResultExp"/>
+      <right xsi:type="robochart:ParExp">
+        <exp xsi:type="robochart:Exists">
+          <variables name="n">
+            <type xsi:type="robochart:TypeRef">
+              <ref xsi:type="robochart:PrimitiveType" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/core.rct#//@types.0"/>
+            </type>
+          </variables>
+          <variables name="g">
+            <type xsi:type="robochart:FunctionType">
+              <domain xsi:type="robochart:TypeRef">
+                <ref xsi:type="robochart:PrimitiveType" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/core.rct#//@types.0"/>
+              </domain>
+              <range xsi:type="robochart:AnyType" identifier="X"/>
+            </type>
+          </variables>
+          <predicate xsi:type="robochart:And">
+            <left xsi:type="robochart:And">
+              <left xsi:type="robochart:CallExp">
+                <function xsi:type="robochart:RefExp" ref="//@functions.5"/>
+                <args xsi:type="robochart:RefExp" ref="//@functions.6/@postconditions.0/@right/@exp/@variables.1"/>
+              </left>
+              <right xsi:type="robochart:Equals">
+                <left xsi:type="robochart:CallExp">
+                  <function xsi:type="robochart:RefExp">
+                    <ref xsi:type="robochart:Function" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/relation_toolkit.rct#//@functions.3"/>
+                  </function>
+                  <args xsi:type="robochart:RefExp" ref="//@functions.6/@postconditions.0/@right/@exp/@variables.1"/>
+                </left>
+                <right xsi:type="robochart:SetComp">
+                  <variables name="x">
+                    <type xsi:type="robochart:TypeRef">
+                      <ref xsi:type="robochart:PrimitiveType" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/core.rct#//@types.0"/>
+                    </type>
+                  </variables>
+                  <predicate xsi:type="robochart:And">
+                    <left xsi:type="robochart:GreaterOrEqual">
+                      <left xsi:type="robochart:RefExp" ref="//@functions.6/@postconditions.0/@right/@exp/@predicate/@left/@right/@right/@variables.0"/>
+                      <right xsi:type="robochart:IntegerExp" value="1"/>
+                    </left>
+                    <right xsi:type="robochart:LessOrEqual">
+                      <left xsi:type="robochart:RefExp" ref="//@functions.6/@postconditions.0/@right/@exp/@predicate/@left/@right/@right/@variables.0"/>
+                      <right xsi:type="robochart:RefExp" ref="//@functions.6/@postconditions.0/@right/@exp/@variables.0"/>
+                    </right>
+                  </predicate>
+                </right>
+              </right>
+            </left>
+            <right xsi:type="robochart:Equals">
+              <left xsi:type="robochart:CallExp">
+                <function xsi:type="robochart:RefExp">
+                  <ref xsi:type="robochart:Function" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/relation_toolkit.rct#//@functions.4"/>
+                </function>
+                <args xsi:type="robochart:RefExp" ref="//@functions.6/@postconditions.0/@right/@exp/@variables.1"/>
+              </left>
+              <right xsi:type="robochart:RefExp" ref="//@functions.6/@parameters.0"/>
+            </right>
+          </predicate>
+        </exp>
+      </right>
+    </postconditions>
+  </functions>
+  <functions name="isFiniteFunction">
+    <type xsi:type="robochart:TypeRef">
+      <ref xsi:type="robochart:PrimitiveType" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/core.rct#//@types.3"/>
+    </type>
+    <parameters name="f">
+      <type xsi:type="robochart:FunctionType">
+        <domain xsi:type="robochart:AnyType" identifier="X"/>
+        <range xsi:type="robochart:AnyType" identifier="Y"/>
+      </type>
+    </parameters>
+    <postconditions xsi:type="robochart:Iff">
+      <left xsi:type="robochart:ResultExp"/>
+      <right xsi:type="robochart:CallExp">
+        <function xsi:type="robochart:RefExp" ref="//@functions.6"/>
+        <args xsi:type="robochart:RefExp" ref="//@functions.7/@parameters.0"/>
+      </right>
+    </postconditions>
+  </functions>
+  <functions name="isFiniteInjection">
+    <type xsi:type="robochart:TypeRef">
+      <ref xsi:type="robochart:PrimitiveType" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/core.rct#//@types.3"/>
+    </type>
+    <parameters name="f">
+      <type xsi:type="robochart:FunctionType">
+        <domain xsi:type="robochart:AnyType" identifier="X"/>
+        <range xsi:type="robochart:AnyType" identifier="Y"/>
+      </type>
+    </parameters>
+    <postconditions xsi:type="robochart:Iff">
+      <left xsi:type="robochart:ResultExp"/>
+      <right xsi:type="robochart:And">
+        <left xsi:type="robochart:CallExp">
+          <function xsi:type="robochart:RefExp" ref="//@functions.6"/>
+          <args xsi:type="robochart:RefExp" ref="//@functions.8/@parameters.0"/>
+        </left>
+        <right xsi:type="robochart:CallExp">
+          <function xsi:type="robochart:RefExp" ref="//@functions.1"/>
+          <args xsi:type="robochart:RefExp" ref="//@functions.8/@parameters.0"/>
+        </right>
+      </right>
+    </postconditions>
+  </functions>
+  <functions name="disjoint">
+    <type xsi:type="robochart:TypeRef">
+      <ref xsi:type="robochart:PrimitiveType" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/core.rct#//@types.3"/>
+    </type>
+    <parameters name="f">
+      <type xsi:type="robochart:RelationType">
+        <domain xsi:type="robochart:AnyType" identifier="L"/>
+        <range xsi:type="robochart:SetType">
+          <domain xsi:type="robochart:AnyType" identifier="X"/>
+        </range>
+      </type>
+    </parameters>
+    <postconditions xsi:type="robochart:Iff">
+      <left xsi:type="robochart:ResultExp"/>
+      <right xsi:type="robochart:ParExp">
+        <exp xsi:type="robochart:Forall">
+          <variables name="p">
+            <type xsi:type="robochart:ProductType">
+              <types xsi:type="robochart:AnyType" identifier="L"/>
+              <types xsi:type="robochart:SetType">
+                <domain xsi:type="robochart:AnyType" identifier="X"/>
+              </types>
+            </type>
+          </variables>
+          <variables name="q">
+            <type xsi:type="robochart:ProductType">
+              <types xsi:type="robochart:AnyType" identifier="L"/>
+              <types xsi:type="robochart:SetType">
+                <domain xsi:type="robochart:AnyType" identifier="X"/>
+              </types>
+            </type>
+          </variables>
+          <suchthat xsi:type="robochart:And">
+            <left xsi:type="robochart:And">
+              <left xsi:type="robochart:InExp">
+                <member xsi:type="robochart:RefExp" ref="//@functions.9/@postconditions.0/@right/@exp/@variables.0"/>
+                <set xsi:type="robochart:RefExp" ref="//@functions.9/@parameters.0"/>
+              </left>
+              <right xsi:type="robochart:InExp">
+                <member xsi:type="robochart:RefExp" ref="//@functions.9/@postconditions.0/@right/@exp/@variables.1"/>
+                <set xsi:type="robochart:RefExp" ref="//@functions.9/@parameters.0"/>
+              </right>
+            </left>
+            <right xsi:type="robochart:Different">
+              <left xsi:type="robochart:RefExp" ref="//@functions.9/@postconditions.0/@right/@exp/@variables.0"/>
+              <right xsi:type="robochart:RefExp" ref="//@functions.9/@postconditions.0/@right/@exp/@variables.1"/>
+            </right>
+          </suchthat>
+          <predicate xsi:type="robochart:Equals">
+            <left xsi:type="robochart:CallExp">
+              <function xsi:type="robochart:RefExp">
+                <ref xsi:type="robochart:Function" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/set_toolkit.rct#//@functions.4"/>
+              </function>
+              <args xsi:type="robochart:ArrayExp">
+                <value xsi:type="robochart:RefExp" ref="//@functions.9/@postconditions.0/@right/@exp/@variables.0"/>
+                <parameters xsi:type="robochart:IntegerExp" value="2"/>
+              </args>
+              <args xsi:type="robochart:ArrayExp">
+                <value xsi:type="robochart:RefExp" ref="//@functions.9/@postconditions.0/@right/@exp/@variables.1"/>
+                <parameters xsi:type="robochart:IntegerExp" value="2"/>
+              </args>
+            </left>
+            <right xsi:type="robochart:SetExp"/>
+          </predicate>
+        </exp>
+      </right>
+    </postconditions>
+  </functions>
+  <functions name="partitions">
+    <type xsi:type="robochart:TypeRef">
+      <ref xsi:type="robochart:PrimitiveType" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/core.rct#//@types.3"/>
+    </type>
+    <parameters name="f">
+      <type xsi:type="robochart:RelationType">
+        <domain xsi:type="robochart:AnyType" identifier="L"/>
+        <range xsi:type="robochart:SetType">
+          <domain xsi:type="robochart:AnyType" identifier="X"/>
+        </range>
+      </type>
+    </parameters>
+    <parameters name="a">
+      <type xsi:type="robochart:SetType">
+        <domain xsi:type="robochart:AnyType" identifier="X"/>
+      </type>
+    </parameters>
+    <postconditions xsi:type="robochart:Iff">
+      <left xsi:type="robochart:ResultExp"/>
+      <right xsi:type="robochart:ParExp">
+        <exp xsi:type="robochart:And">
+          <left xsi:type="robochart:CallExp">
+            <function xsi:type="robochart:RefExp" ref="//@functions.9"/>
+            <args xsi:type="robochart:RefExp" ref="//@functions.10/@parameters.0"/>
+          </left>
+          <right xsi:type="robochart:Equals">
+            <left xsi:type="robochart:CallExp">
+              <function xsi:type="robochart:RefExp">
+                <ref xsi:type="robochart:Function" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/set_toolkit.rct#//@functions.7"/>
+              </function>
+              <args xsi:type="robochart:CallExp">
+                <function xsi:type="robochart:RefExp">
+                  <ref xsi:type="robochart:Function" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/relation_toolkit.rct#//@functions.4"/>
+                </function>
+                <args xsi:type="robochart:RefExp" ref="//@functions.10/@parameters.0"/>
+              </args>
+            </left>
+            <right xsi:type="robochart:RefExp" ref="//@functions.10/@parameters.1"/>
+          </right>
+        </exp>
+      </right>
+    </postconditions>
+  </functions>
+</robochart:RCPackage>

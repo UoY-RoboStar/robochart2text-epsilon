@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ASCII"?>
+<robochart:RCPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:robochart="http://www.robocalc.circus/RoboChart" name="statemachines::twostatesandtransitionactionevent">
+  <machines name="StmA">
+    <events name="event1"/>
+    <nodes xsi:type="robochart:State" name="s0"/>
+    <nodes xsi:type="robochart:State" name="s1"/>
+    <transitions name="s0tos1" source="//@machines.0/@nodes.0" target="//@machines.0/@nodes.1">
+      <action xsi:type="robochart:SendEvent">
+        <trigger event="//@machines.0/@events.0"/>
+      </action>
+    </transitions>
+  </machines>
+</robochart:RCPackage>

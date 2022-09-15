@@ -1,0 +1,9 @@
+package dependant
+
+import dependee::*
+
+record LocalRecord {
+  	
+	field1 : UsefulType 
+
+}

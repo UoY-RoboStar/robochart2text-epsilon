@@ -1,0 +1,73 @@
+/********************************************************************************
+ * Copyright (c) 2022 University of York and others
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *   William Barnett - initial definition
+ ********************************************************************************/
+
+import "./common/RoboChart.eol";
+import "./common/util.eol";
+
+/* baseOuputLocation parameter should be set. 
+   modelNameAsSubDir variable should be set.*/
+
+pre{
+	var OUTPUT_DIR: String = baseOuputLocation ;
+	
+	var emptyPackages = 1;
+}
+
+rule RCPackage2file
+	transform package : RCPackage {
+
+	template : "../templates/RCPackage.egl"
+	
+	pre {
+		var outputLocation = OUTPUT_DIR;
+		
+		if ( modelNameAsSubDir.asBoolean() ){
+			outputLocation = outputLocation + "/" + package.getModelName();
+		}
+		
+		var packageName: String; 
+		
+		if (package.name <> null){
+			packageName = packageNameRemoveContext( package.name );
+			
+		} else {
+		 /* RoboTool uses the filename of the rct file in the rct text diagram statement. For
+          * generation as there is no file an EmptyPackagex naming convention is used. */
+			packageName = "emptypackage" + emptyPackages.asString();
+			emptyPackages++;
+		}
+		
+		packageName.print("@@ pn ");
+		
+	}
+	
+	parameters : Map {
+		"rctfilename" = packageName
+	}
+
+	target {
+		var file: String; 
+		
+		package.name.println("RCPackage name: ");
+				
+		if(package.name <> null){
+			file = outputLocation +  "/" + packageNameToPath( package.name );
+			
+		} else {
+			file = outputLocation +  "/" + packageName;
+			
+		}
+		file.println("filePath = ");
+		return file + ".rct";
+	}
+}

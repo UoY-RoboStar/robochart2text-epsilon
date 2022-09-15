@@ -1,0 +1,10 @@
+package interfaces::fourevents
+
+interface fourevents { 
+	
+event event1
+	event event2
+	event event3 : int
+	event event4 : boolean
+}
+

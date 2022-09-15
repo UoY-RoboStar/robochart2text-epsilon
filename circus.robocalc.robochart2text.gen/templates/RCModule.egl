@@ -1,0 +1,31 @@
+[*********************************************************************************
+ * Copyright (c) 2022 University of York and others
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *   William Barnett - initial definition
+ ********************************************************************************]
+[%  import "../scripts/common/util.eol";
+
+	var tplConnectionNode: Template = TemplateFactory.load("../templates/ConnectionNode.egl"); 	
+	var tplConnection: Template = TemplateFactory.load("../templates/Connection.egl"); 	
+	
+%] module [%=rcmodule.name%] {
+	[*-Nodes*]
+	[% for (nd: ConnectionNode in rcmodule.nodes) {
+	   		tplConnectionNode.populate("connectionnode", nd);
+	 		out.println( tplConnectionNode.process().indent() );
+	    } %]
+	
+	[*-Connections*]
+	[%	for (cn: Connection in rcmodule.connections ) {
+		 	tplConnection.populate("connection", cn);
+		 	out.println( tplConnection.process().indent() );
+   		} %]
+		 
+}

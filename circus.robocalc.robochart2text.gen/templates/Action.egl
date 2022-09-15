@@ -1,0 +1,34 @@
+[*********************************************************************************
+ * Copyright (c) 2022 University of York and others
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *   William Barnett - initial definition
+ ********************************************************************************]
+[%	import "../scripts/common/util.eol";
+		var tplStatement: Template = TemplateFactory.load("../templates/Statement.egl"); 
+
+//entry 
+if ( action.isTypeOf(EntryAction) ) {
+	var entryAction = action;
+	%]entry [% tplStatement.populate("statement", entryAction.action); out.print( tplStatement.process() );
+
+//during
+} else if( action.isTypeOf(DuringAction) ) {
+	var duringAction = action;
+	%]during [% tplStatement.populate("statement", duringAction.action); out.print( tplStatement.process() );
+//exit
+} else if( action.isTypeOf(ExitAction) ) {
+	var exitAction = action;
+	%]exit [% tplStatement.populate("statement", exitAction.action); out.print( tplStatement.process() );
+	
+} else {
+	%]// TODO generation support for [%=action.type.name%]. [% 
+}
+
+%]

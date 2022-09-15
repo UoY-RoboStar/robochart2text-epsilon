@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="ASCII"?>
+<robochart:RCPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:robochart="http://www.robocalc.circus/RoboChart" name="dependant">
+  <imports importedNamespace="dependee::*"/>
+  <types xsi:type="robochart:RecordType" name="LocalRecord">
+    <fields name="field1">
+      <type xsi:type="robochart:TypeRef">
+        <ref xsi:type="robochart:PrimitiveType" href="../importDependant.rct#|0"/>
+      </type>
+    </fields>
+  </types>
+</robochart:RCPackage>

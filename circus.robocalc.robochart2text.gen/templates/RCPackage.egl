@@ -1,0 +1,75 @@
+[*********************************************************************************
+ * Copyright (c) 2022 University of York and others
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *   William Barnett - initial definition
+ ********************************************************************************]
+[% 
+	var tplRCModule: Template = TemplateFactory.load("../templates/RCModule.egl");
+	var tplTypeDecl: Template = TemplateFactory.load("../templates/TypeDecl.egl");
+	var tplController: Template = TemplateFactory.load("../templates/Controller.egl");
+	var tplStateMachine: Template = TemplateFactory.load("../templates/StateMachine.egl");
+	var tplRoboticPlatform: Template = TemplateFactory.load("../templates/RoboticPlatform.egl");
+	var tplInterface: Template = TemplateFactory.load("../templates/Interface.egl");
+	var tplFunction: Template = TemplateFactory.load("../templates/Function.egl");
+%]
+[% if (package.name <> null){ %]
+package [%=package.name %]
+[% } else { %]
+diagram [%=rctfilename%]
+[% } %]
+[*- Imports *]
+[% for ( imp: Import in package.imports ){
+	%]import [%=imp.importedNamespace%] 
+	[%
+ } %]
+[*- Data Types *]
+[% for ( typ: TypeDecl in package.types ){
+	 tplTypeDecl.populate("def", typ);
+	 out.println( tplTypeDecl.process() );
+	 out.println();
+ } %]
+[*-Interfaces *]
+[% for ( ifc: Interface in package.interfaces ){
+	 tplInterface.populate("interface", ifc);
+	 out.println( tplInterface.process() );
+	 out.println();
+ } %]
+[*- Functions *]
+[% for ( fun: Function in package.functions ){
+	 tplFunction.populate("function", fun);
+	 out.println( tplFunction.process() );
+	 out.println();
+ } %]
+[*-Modules *]
+[% for ( mod: RCModule in package.modules ){
+	 tplRCModule.populate("rcmodule", mod);
+	 out.print( tplRCModule.process() );
+	 out.println();
+ } %]
+[*- Controllers *]
+[% for ( ctrl: Controller in package.controllers ){
+	 tplController.populate("controller", ctrl);
+	 out.println( tplController.process() );
+	 out.println();
+ } %]
+[*- Machines *]
+[% for ( stm: StateMachine in package.machines ){
+	 tplStateMachine.populate("statemachine", stm);
+	  
+	 out.println( tplStateMachine.process() );
+	 out.println();
+ } %]
+[*-Operations *][*TODO*]
+[*- Robotic Platforms *]
+[% for ( platform: RoboticPlatform in package.robots ){
+	 tplRoboticPlatform.populate("roboticplatform", platform);
+	 out.println( tplRoboticPlatform.process() );
+	 out.println();
+ } %]

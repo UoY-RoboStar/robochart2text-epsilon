@@ -1,0 +1,4 @@
+gen/*
+/TEST-*
+
+!/gen/note.txt

@@ -1,0 +1,156 @@
+/********************************************************************************
+ * Copyright (c) 2022 University of York and others
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *   William Barnett - initial definition
+ ********************************************************************************/
+
+import "./RoboChart.eol";
+
+$pre self.size = 1
+operation Collection(Any) unique(): Any{
+		return self.asOrderedSet().first();
+}
+
+/*
+ *	 Gets the file path of the package from its qualified name
+ */
+operation packageNameToPath( name:String ):String {
+
+	var path: String; 
+
+	if (name <> null){
+		path = name.replace( rc_separator() , "/"); 
+	} else {
+		path = "";
+	}
+	
+	return path;
+}
+
+/*
+ *	 Removes the context from a fully qualified package name
+ * 
+ *                 c::c::c...::n
+ *                 returns n
+ */
+operation packageNameRemoveContext( name:String ):String {
+	var reducedName: String; 
+
+	if (name <> null){
+		var separated = name.split("::");
+		reducedName = separated.at( separated.size() - 1 ); 
+		
+	} else {
+		reducedName = "";
+	}
+	
+	return reducedName;
+}
+
+operation RCPackage getModelName():String {
+	var modelFileName: String;
+	
+	modelFileName = self.eResource().getURI().asString().getFileName();
+	
+	return modelFileName;
+}
+
+/*
+ *   Returns the name of the model from its path.
+ *            
+ *             Assuming the path is in the format /d/d/d/.../f.model 
+ *             returns f 
+ */
+operation Native("org.eclipse.epsilon.emc.emf.EmfModel") getModelName(): String{
+	
+	var fileName : String = self.getModelFile().getFileName();
+
+	return fileName;
+}
+
+
+/*
+ *   Returns the name of the file from a path.
+ *            
+ *             Assuming the path is in the format /d/d/d/.../f.extension 
+ *             returns f 
+ */
+operation String getFileName(): String{
+	
+	var file : String = self;
+	var separated : Sequence(String) = file.split("\\.|/");
+
+	return separated.at( separated.size() - 2 );
+}
+
+
+/*
+ *    Compares two files ignoring any white space.
+ *
+ *		Returns true if the files match.
+ */
+operation relaxedCompare (filePathA:String ,filePathB:String): Boolean {
+	filePathA.println();
+	filePathB.println();
+
+	var fileA = readFile( filePathA );
+	var fileB = readFile( filePathB );
+	
+	fileA = fileA.replace("\\s","");
+	fileB = fileB.replace("\\s","");
+	
+	return fileA = fileB;
+}
+
+/*
+ *	 Returns the string of the provided file.
+ */
+operation readFile(path: String): String{
+	var contents: Native("java.lang.StringBuilder") = new Native("java.lang.StringBuilder");
+	var reader: Native("java.io.BufferedReader") = new Native("java.io.BufferedReader")( new Native("java.io.FileReader")(path) );
+	
+	var line: String;
+	line = reader.readline();
+	
+	while (line <> null){
+		contents.append(line + "\n");
+		line = reader.readline();
+	}
+	
+	return contents.toString();
+}
+
+operation ErrorExecutedUnreachableSection(context:Any){
+	throw "Executed unreachable section! " + context.asString();
+}
+
+/*
+ *	 Returns a string with each line prepended with specified number of tabs.
+ */
+operation String indent(size:Integer):String {
+	var tabs = "";
+	
+	for (i in Set{1..size}){
+		tabs = tabs.concat("\t");
+	} 
+	
+	var inSplit = self.split("\n");
+	var indented = "";
+	
+	for (line:String in inSplit){
+		indented = indented.concat( tabs + line + "\n" );
+	}
+	
+	return indented;
+}
+
+operation String indent():String {
+ 	return self.indent(1);
+}

@@ -1,0 +1,150 @@
+[*********************************************************************************
+ * Copyright (c) 2022 University of York and others
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *   William Barnett - initial definition
+ ********************************************************************************]
+[% 	 import "../scripts/common/util.eol";
+ %]	[%=expression.text()%]  
+[% 
+	@template
+	operation Expression text() {	
+
+	var typeName = self.type().name;
+	
+	  switch ( typeName ){
+	   
+		 case ("RefExp"): { 
+		    var refExp = self;
+		    %][%=refExp.ref.name%][% 
+			
+		}	
+		case ("And"): {
+		 	var andExp = self;
+		 	
+		 	// left /\ right
+		 	%][%=andExp.left.text()%] /\ [%=andExp.right.text()%] [%
+		
+		 }
+		 case ("BooleanExp"): {
+		 	var booleanExp = self;
+		 	%][%=booleanExp.value%] [%
+		
+		 }
+		 case ("Neg"): {
+		 	var negExp = self;
+		 	%]not [%=negExp.exp.text()%] [%
+		
+		 }
+		 case ("TupleExp"): {
+			var tupleExp = self;
+			%](| [%
+			for ( exp: RoboChart!Expression in tupleExp.values ){
+				%][%=exp.text()%] [% if (hasMore) { %], [% }
+			} 
+			%] |) [%
+			
+		 }	
+		 case ("SetExp"): {
+			var setExp = self;
+			%]{ [%
+			for(exp: RoboChart!Expression in setExp.values){
+				%][%=exp.text()%] [% if (hasMore) { %], [% }
+			}
+			%] } [%
+		
+		 }
+		 case ("SeqExp"): {
+			var seqExp = self;
+			%]< [%
+			for(exp: RoboChart!Expression in seqExp.values){
+				%][%=exp.text()%] [% if (hasMore) { %], [% }
+			}
+			%] > [%
+			
+		 }	
+		 case ("LessThan"): {
+		 	var lessthanExp = self;
+		 	
+		 	// left < right
+		 	%][%=lessthanExp.left.text() %] < [%=lessthanExp.right.text()%][%
+		
+		 }
+		 case ("GreaterThan"): {
+		 	var greaterthanExp = self;
+		 	
+		 	// left > right
+		 	greaterthanExp.left.asString().println();
+		 	%][%=greaterthanExp.left.text()%] > [%=greaterthanExp.right.text()%][%
+		 	
+		  }
+		  case ("GreaterOrEqual"): {
+		 	var geqExp = self;
+		 	
+		 	// left <= right
+		 	%][%=geqExp.left.text()%] <= [%=geqExp.right.text()%][%
+		 	
+		  }
+		  case ("LessOrEqual"): {
+		 	var leqExp = self;
+		 	
+		 	// left >= right
+		 	%][%=leqExp.left.text()%] >= [%=leqExp.right.text()%][%		
+		 	
+		  }
+		  case ("ClockExp"): {
+			var clockExp = self;
+			
+		 	%]since( [%=clockExp.clock.name%] ) [%
+		 }
+		  case ("ParExp"): {
+			var parExp = self;
+			
+		 	%]( [%=parExp.exp.text()%] ) [%		
+		
+		 }
+		  case ("ArrayExp"): {
+			var arrayExp = self;
+			
+		 	%][%=arrayExp.value.text()%] [% for (par: Expression in arrayExp.parameters ) { %][[%=par.text()%]][%  }		
+		
+		 }
+		  case ("IntegerExp"): {
+			var integerExp = self;
+			
+		 	%][%=integerExp.value.asString()%] [%		
+		 }
+		  case ("CallExp"): {
+			var callExp = self;
+		   %][%=callExp.`function`.text()%]( [% for (ar: Expression in callExp.args) { %][%=ar.text()%][% if (hasMore){%], [%} } %] ) [%
+		 }
+		 
+		  case ("Equals"): {
+		 	var eqExp = self;
+		 	
+		 	// left == right
+		 	%][%=eqExp.left.text()%] == [%=eqExp.right.text()%][%
+		 }
+		 case ("EnumExp"): { 
+		    var enumExp = self;
+		    %][%=enumExp.`type`.name%]::[%=enumExp.literal.name%][% 
+			
+		}	
+		 case ("InExp"): { 
+		    var inExp = self;
+		    %][%=inExp.member.text()%] in [%=inExp.set.text()%][% 
+			
+		}
+		 default: {
+			%] // expression type [%= self.type.name %] todo [%
+		 }
+	}
+ }
+ 
+%]

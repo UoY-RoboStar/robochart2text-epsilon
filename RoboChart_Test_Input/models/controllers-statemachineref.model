@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="ASCII"?>
+<robochart:RCPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:robochart="http://www.robocalc.circus/RoboChart" name="controllers::statemachineref">
+  <machines name="StmSource"/>
+  <controllers name="ControllerStmRef">
+    <machines xsi:type="robochart:StateMachineRef" name="stm_ref0" ref="//@machines.0"/>
+  </controllers>
+</robochart:RCPackage>

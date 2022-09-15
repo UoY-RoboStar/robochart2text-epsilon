@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="ASCII"?>
+<robochart:RCPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:robochart="http://www.robocalc.circus/RoboChart" name="core">
+  <types xsi:type="robochart:PrimitiveType" name="nat"/>
+  <types xsi:type="robochart:PrimitiveType" name="int"/>
+  <types xsi:type="robochart:PrimitiveType" name="string"/>
+  <types xsi:type="robochart:PrimitiveType" name="boolean"/>
+  <types xsi:type="robochart:PrimitiveType" name="real"/>
+</robochart:RCPackage>

@@ -1,0 +1,4 @@
+package types::product 
+
+type Velocity
+record RecordWithProduct { collection : int * boolean simple : int }

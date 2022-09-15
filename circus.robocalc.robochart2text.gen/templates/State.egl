@@ -1,0 +1,39 @@
+[*********************************************************************************
+ * Copyright (c) 2022 University of York and others
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *   William Barnett - initial definition
+ ********************************************************************************]
+ [%	import "../scripts/common/util.eol";
+
+		var tplNode: Template = TemplateFactory.load("../templates/Node.egl"); 
+		var tplTransition: Template = TemplateFactory.load("../templates/Transition.egl"); 
+		var tplAction: Template = TemplateFactory.load("../templates/Action.egl"); 
+		
+%] state [%=state.name%] { 
+[% 
+		//Actions
+		for (ac: Action in state.actions ) {
+		 	tplAction.populate("action", ac);
+		 	out.println( tplAction.process().indent() );
+   		} 		
+	
+		//Nodes
+		for (nd: Node in state.nodes ) {
+		 	tplNode.populate("node", nd);
+		 	out.println( tplNode.process().indent() );
+   		} 
+   		
+   		//Transitions
+		for (tr: Transition in state.transitions ) {
+		 	tplTransition.populate("transition", tr);
+		 	out.println( tplTransition.process().indent() );
+   		} 
+   		%]
+}

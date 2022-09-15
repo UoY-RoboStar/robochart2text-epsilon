@@ -1,0 +1,100 @@
+/********************************************************************************
+ * Copyright (c) 2022 University of York and others
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *   William Barnett - initial definition
+ ********************************************************************************/
+
+import "../scripts/common/util.eol";
+
+var EXPECTED_PATH  = expectedtextdir + "/";
+var GENERATED_PATH = generatedtextdir + "/";
+
+
+@model
+operation loadTopLevelModels() {
+  runTarget("load-models");
+}
+
+$onlyWith Map { "RoboChart" = "EmptyPackage1"  }
+$onlyWith Map { "RoboChart" = "NamedPackage"  }
+$onlyWith Map { "RoboChart" = "NamedSubPackage"  }
+$onlyWith Map { "RoboChart" = "Controllers-Empty"  }
+$onlyWith Map { "RoboChart" = "Platforms-Empty"  }
+$onlyWith Map { "RoboChart" = "StateMachines-Empty"  }
+$onlyWith Map { "RoboChart" = "Types-Primitive"  }
+$onlyWith Map { "RoboChart" = "Types-RecordThreeFields", "Core"="Core"  }
+$onlyWith Map { "RoboChart" = "Types-EnumerationFourLiterals", "Core"="Core"  }
+$onlyWith Map { "RoboChart" = "Interfaces-Empty"  }
+$onlyWith Map { "RoboChart" = "Interfaces-FourEvents", "Core"="Core"  }
+$onlyWith Map { "RoboChart" = "Interfaces-TwoOperationsOneVar", "Core"="Core"  }
+$onlyWith Map { "RoboChart" = "Modules-Empty"  }
+$onlyWith Map { "RoboChart" = "Modules-ControllerRef"  }
+$onlyWith Map { "RoboChart" = "Modules-RoboticPlatformRef"  }
+$onlyWith Map { "RoboChart" = "Controllers-StateMachineRef"  }
+$onlyWith Map { "RoboChart" = "Controllers-TwoWithConnections", "Core"="Core"  }
+$onlyWith Map { "RoboChart" = "StateMachines-TwoStatesAndTransitions", "Core"="Core"  }
+$onlyWith Map { "RoboChart" = "StateMachines-TwoStatesAndTransitionsInputTrigger", "Core"="Core"  }
+$onlyWith Map { "RoboChart" = "StateMachines-TwoStatesAndTransitionActionEvent", "Core"="Core"  }
+$onlyWith Map { "RoboChart" = "StateMachines-TwoStatesAndTransitionActionGuardAnd", "Core"="Core"  }
+$onlyWith Map { "RoboChart" = "Controllers-OneWithInterfaces", "Core"="Core"  }
+$onlyWith Map { "RoboChart" = "StateMachines-CompositeState", "Core"="Core"  }
+$onlyWith Map { "RoboChart" = "Types-Set", "Core"="Core"  }
+$onlyWith Map { "RoboChart" = "Types-Seq", "Core"="Core"  }
+$onlyWith Map { "RoboChart" = "Types-Product", "Core"="Core"  }
+$onlyWith Map { "RoboChart" = "ImportDependee", "Core"="Core"  }
+
+@test
+operation GeneratedRctTextMatchesExpected() {
+	RoboChart.getModelName().println("## - rc : ");
+	RoboChart!RCPackage.allInstances().println("## - packages : ");
+  var package = RoboChart!RCPackage.allInstances().select(pkg | pkg.name <> "core").unique();
+  var packagePath: String;
+  
+  runTarget("rc2txt");
+  
+  
+  /* RoboTool uses the filename of the rct file in the rct text diagram statement. For
+   * generation as there is no file an EmptyPackagex naming convention is used.
+   * This means the model file name encodes the expected result for unamed packages. */
+  if ( package.name <> null ){
+  		packagePath = packageNameToPath( package.name );
+  		
+  } else{
+  		packagePath = RoboChart.getModelName();
+  }
+ 
+  var generatedFilesMatch: Boolean =  relaxedCompare(EXPECTED_PATH + RoboChart.getModelName() + ".rct", GENERATED_PATH + packagePath + ".rct");
+  
+  assertTrue(generatedFilesMatch);
+}
+
+/*
+ *  For references accross files created using RoboTool and exported  
+ *  package files separately, there appears to be an issue with relative refereces
+ *  in the exported model file not being resolved by the epsilon emf
+ *  model loader. When using a translated model this problem isn't seen.
+ * 
+ *		TODO try the PR's robosim loader to load the model. 
+ */
+$onlyWith Map { "RoboChart" = "ImportDependant", "ImportDependee"="ImportDependee" }
+@test
+operation GeneratedRctTextMatchesExpectedForImport(){
+	RoboChart!RCPackage.allInstances().select(pkg | pkg.name = "dependant").asString().println("rcp@@@@");
+	var package = RoboChart!RCPackage.allInstances().select(pkg | pkg.name = "dependant").first();
+	var packagePath =  packageNameToPath( package.name );
+	
+	runTarget("rc2txt");
+	
+	
+	var generatedFilesMatch: Boolean =  relaxedCompare(EXPECTED_PATH + RoboChart.getModelName() + ".rct", GENERATED_PATH + packagePath + ".rct");
+  
+  	assertTrue(generatedFilesMatch);
+}
+

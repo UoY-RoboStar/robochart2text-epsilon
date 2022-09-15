@@ -1,0 +1,65 @@
+[*********************************************************************************
+ * Copyright (c) 2022 University of York and others
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *   William Barnett - initial definition
+ ********************************************************************************]
+[% import "../scripts/common/util.eol";
+	
+	var tplType: Template = TemplateFactory.load("../templates/Type.egl");
+
+// AnyType
+if ( type.isTypeOf(AnyType) ) {
+	var anyType = type;
+	%]?[%=anyType.identifier%][%
+}
+
+// MatrixType - TODO
+
+// ProductType
+ else if ( type.isTypeOf(ProductType) ){  
+ 	var producttype = type;
+
+	for ( typ : Type in producttype.types ) {
+		tplType.populate("type", typ);
+	 	out.print( tplType.process() );
+	 	if (hasMore){ %] * [% }
+	}
+
+// RelationType - TODO
+
+// SetType
+} else if ( type.isTypeOf(SetType) ){  
+ 	var settype = type;
+	%]Set( [%
+	tplType.populate("type", settype.domain);
+	out.print( tplType.process() ); 
+	%] ) [%
+
+// SeqType
+ } else if ( type.isTypeOf(SeqType) ){ 
+	var seqtype = type;
+	%]Seq( [% 
+	tplType.populate("type", seqtype.domain);
+	out.print( tplType.process() );
+	%] ) [%
+
+//TypeRef
+ } else if ( type.isTypeOf(TypeRef) ){ 
+	var typeref = type;
+	%][%=typeref.ref.name%] [% 
+	
+// VectorType - TODO
+
+
+} else {
+	%] //Type [%=type.name %] todo [%
+} 
+
+%]

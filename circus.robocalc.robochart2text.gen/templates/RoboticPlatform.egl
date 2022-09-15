@@ -1,0 +1,35 @@
+[*********************************************************************************
+ * Copyright (c) 2022 University of York and others
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *   William Barnett - initial definition
+ ********************************************************************************]
+[%  import "../scripts/common/util.eol";
+
+	var tplContext: Template = TemplateFactory.load("../templates/Context.egl"); 	
+	
+   //RoboticPlatformRef
+   if (roboticplatform.isTypeOf(RoboticPlatformRef)) {
+   	 	var roboticplatformref = roboticplatform; 
+   	 	%] rref [%=roboticplatformref.name%] = [%=roboticplatformref.ref.name%] [%
+   
+   //RoboticPlatformDef	 	
+   } else if (roboticplatform.isTypeOf(RoboticPlatformDef)) {
+   		var roboticplatformdef = roboticplatform;
+		%] robotic platform [%=roboticplatformdef.name%] {
+[% 
+	    //Context
+		tplContext.populate("context", roboticplatformdef);
+		out.println( tplContext.process().indent() ); 
+%]} [%   		
+   } else {
+   		// Shouldn't reach here.
+   		ErrorExecutedUnreachableSection(roboticplatform.type() );
+   }
+%]

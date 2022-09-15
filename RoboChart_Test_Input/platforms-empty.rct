@@ -1,0 +1,4 @@
+package platforms::empty 
+
+robotic platform emptyplatform {
+}

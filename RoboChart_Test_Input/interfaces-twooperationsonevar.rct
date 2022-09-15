@@ -1,0 +1,8 @@
+package interfaces::twooperationsonevar
+
+interface twooperationsonevar {
+	stop ( )
+	move ( m1 : int , m2 : int )
+	var postion : real
+}
+

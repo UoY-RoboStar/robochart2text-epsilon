@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="ASCII"?>
+<robochart:RCPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:robochart="http://www.robocalc.circus/RoboChart" name="types::enumerationfourliterals">
+  <types xsi:type="robochart:Enumeration" name="four">
+    <literals name="ONE"/>
+    <literals name="TWO"/>
+    <literals name="THREE">
+      <types xsi:type="robochart:TypeRef">
+        <ref xsi:type="robochart:PrimitiveType" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/core.rct#//@types.1"/>
+      </types>
+    </literals>
+    <literals name="FOUR"/>
+  </types>
+</robochart:RCPackage>

@@ -1,0 +1,3 @@
+package types::recordthreefields
+
+record threefields { one : int two : boolean three : string }

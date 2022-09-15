@@ -1,0 +1,17 @@
+package controllers::twowithconnections 
+
+controller CtrlA {
+	
+event outa1
+	event ina2 : int
+	connection CtrlA on outa1 to CtrlB on inb1
+}
+
+
+controller CtrlB {
+	
+event inb1
+	event outb1 : int
+	connection CtrlB on outb1 to CtrlA on ina2 ( _async )
+}
+

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ASCII"?>
+<robochart:RCPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:robochart="http://www.robocalc.circus/RoboChart" name="controllers::onewithinterfaces">
+  <interfaces name="IfcR">
+    <operations name="move">
+      <parameters name="z">
+        <type xsi:type="robochart:TypeRef">
+          <ref xsi:type="robochart:PrimitiveType" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/core.rct#//@types.1"/>
+        </type>
+      </parameters>
+      <parameters name="y">
+        <type xsi:type="robochart:TypeRef">
+          <ref xsi:type="robochart:PrimitiveType" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/core.rct#//@types.1"/>
+        </type>
+      </parameters>
+    </operations>
+  </interfaces>
+  <interfaces name="IfcD">
+    <events name="e1">
+      <type xsi:type="robochart:TypeRef">
+        <ref xsi:type="robochart:PrimitiveType" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/core.rct#//@types.4"/>
+      </type>
+    </events>
+    <events name="e2"/>
+  </interfaces>
+  <interfaces name="IfcD2">
+    <events name="e3">
+      <type xsi:type="robochart:TypeRef">
+        <ref xsi:type="robochart:PrimitiveType" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/core.rct#//@types.1"/>
+      </type>
+    </events>
+  </interfaces>
+  <controllers rInterfaces="//@interfaces.0" interfaces="//@interfaces.1 //@interfaces.2" name="CtrlWithInterfaces"/>
+</robochart:RCPackage>

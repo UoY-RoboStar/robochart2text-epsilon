@@ -1,0 +1,10 @@
+package controllers::statemachineref 
+
+controller ControllerStmRef {
+	
+sref stm_ref0 = StmSource
+}
+
+stm StmSource {
+}
+

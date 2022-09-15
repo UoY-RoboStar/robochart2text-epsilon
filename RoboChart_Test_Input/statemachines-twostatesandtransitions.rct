@@ -1,0 +1,19 @@
+package statemachines::twostatesandtransitions 
+
+stm StmA {
+event event1
+	state s0 {
+	}
+	state s1 {
+	}
+	transition s0tos1 {
+		from s0
+		to s1
+		trigger event1
+	}
+	transition s1tos0 {
+		from s1
+		to s0
+	}
+}
+

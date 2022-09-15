@@ -1,0 +1,35 @@
+[*********************************************************************************
+ * Copyright (c) 2022 University of York and others
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *   William Barnett - initial definition
+ ********************************************************************************]
+[%
+	var tplEvent: Template = TemplateFactory.load("../templates/Event.egl");
+	var tplOperationSig: Template = TemplateFactory.load("../templates/OperationSig.egl");
+	var tplVariableList: Template = TemplateFactory.load("../templates/VariableList.egl");
+%]
+interface [%=interface.name%] {
+[*-Clocks*][*TODO*]
+[*-Events*]
+    [% for ( ev: Event in interface.events ){
+		 tplEvent.populate("event", ev);
+		 out.println( "\t" + tplEvent.process() );
+	 } %]
+[*-Operations*]
+    [% for ( opr: OperationSig in interface.operations ){
+		 tplOperationSig.populate("operationsig", opr);
+		 out.println( "\t" + tplOperationSig.process() );
+	 } %]
+[*-VariableList*]
+    [% for ( vl: VariableList in interface.variableList ){
+		 tplVariableList.populate("variablelist", vl);
+		 out.println( "\t" + tplVariableList.process() );
+	 } %]
+}

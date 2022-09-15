@@ -1,0 +1,291 @@
+<?xml version="1.0" encoding="ASCII"?>
+<robochart:RCPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:robochart="http://www.robocalc.circus/RoboChart" name="set_toolkit">
+  <functions name="notin">
+    <type xsi:type="robochart:TypeRef">
+      <ref xsi:type="robochart:PrimitiveType" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/core.rct#//@types.3"/>
+    </type>
+    <parameters name="m">
+      <type xsi:type="robochart:AnyType" identifier="X"/>
+    </parameters>
+    <parameters name="s">
+      <type xsi:type="robochart:SetType">
+        <domain xsi:type="robochart:AnyType" identifier="X"/>
+      </type>
+    </parameters>
+    <postconditions xsi:type="robochart:Iff">
+      <left xsi:type="robochart:ResultExp"/>
+      <right xsi:type="robochart:Not">
+        <exp xsi:type="robochart:InExp">
+          <member xsi:type="robochart:RefExp" ref="//@functions.0/@parameters.0"/>
+          <set xsi:type="robochart:RefExp" ref="//@functions.0/@parameters.1"/>
+        </exp>
+      </right>
+    </postconditions>
+  </functions>
+  <functions name="subseteq">
+    <type xsi:type="robochart:TypeRef">
+      <ref xsi:type="robochart:PrimitiveType" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/core.rct#//@types.3"/>
+    </type>
+    <parameters name="ss">
+      <type xsi:type="robochart:SetType">
+        <domain xsi:type="robochart:AnyType" identifier="X"/>
+      </type>
+    </parameters>
+    <parameters name="s">
+      <type xsi:type="robochart:SetType">
+        <domain xsi:type="robochart:AnyType" identifier="X"/>
+      </type>
+    </parameters>
+    <postconditions xsi:type="robochart:Iff">
+      <left xsi:type="robochart:ResultExp"/>
+      <right xsi:type="robochart:ParExp">
+        <exp xsi:type="robochart:Forall">
+          <variables name="x">
+            <type xsi:type="robochart:AnyType" identifier="X"/>
+          </variables>
+          <predicate xsi:type="robochart:InExp">
+            <member xsi:type="robochart:RefExp" ref="//@functions.1/@postconditions.0/@right/@exp/@variables.0"/>
+            <set xsi:type="robochart:RefExp" ref="//@functions.1/@parameters.1"/>
+          </predicate>
+        </exp>
+      </right>
+    </postconditions>
+  </functions>
+  <functions name="subset">
+    <type xsi:type="robochart:TypeRef">
+      <ref xsi:type="robochart:PrimitiveType" href="platform:/plugin/circus.robocalc.robochart.textual/lib/robochart/core.rct#//@types.3"/>
+    </type>
+    <parameters name="ss">
+      <type xsi:type="robochart:SetType">
+        <domain xsi:type="robochart:AnyType" identifier="X"/>
+      </type>
+    </parameters>
+    <parameters name="s">
+      <type xsi:type="robochart:SetType">
+        <domain xsi:type="robochart:AnyType" identifier="X"/>
+      </type>
+    </parameters>
+    <postconditions xsi:type="robochart:Iff">
+      <left xsi:type="robochart:ResultExp"/>
+      <right xsi:type="robochart:And">
+        <left xsi:type="robochart:CallExp">
+          <function xsi:type="robochart:RefExp" ref="//@functions.1"/>
+          <args xsi:type="robochart:RefExp" ref="//@functions.2/@parameters.0"/>
+          <args xsi:type="robochart:RefExp" ref="//@functions.2/@parameters.1"/>
+        </left>
+        <right xsi:type="robochart:Different">
+          <left xsi:type="robochart:RefExp" ref="//@functions.2/@parameters.0"/>
+          <right xsi:type="robochart:RefExp" ref="//@functions.2/@parameters.1"/>
+        </right>
+      </right>
+    </postconditions>
+  </functions>
+  <functions name="union">
+    <type xsi:type="robochart:SetType">
+      <domain xsi:type="robochart:AnyType" identifier="X"/>
+    </type>
+    <parameters name="s1">
+      <type xsi:type="robochart:SetType">
+        <domain xsi:type="robochart:AnyType" identifier="X"/>
+      </type>
+    </parameters>
+    <parameters name="s2">
+      <type xsi:type="robochart:SetType">
+        <domain xsi:type="robochart:AnyType" identifier="X"/>
+      </type>
+    </parameters>
+    <postconditions xsi:type="robochart:Equals">
+      <left xsi:type="robochart:ResultExp"/>
+      <right xsi:type="robochart:SetComp">
+        <variables name="x">
+          <type xsi:type="robochart:AnyType" identifier="X"/>
+        </variables>
+        <predicate xsi:type="robochart:Or">
+          <left xsi:type="robochart:InExp">
+            <member xsi:type="robochart:RefExp" ref="//@functions.3/@postconditions.0/@right/@variables.0"/>
+            <set xsi:type="robochart:RefExp" ref="//@functions.3/@parameters.0"/>
+          </left>
+          <right xsi:type="robochart:InExp">
+            <member xsi:type="robochart:RefExp" ref="//@functions.3/@postconditions.0/@right/@variables.0"/>
+            <set xsi:type="robochart:RefExp" ref="//@functions.3/@parameters.1"/>
+          </right>
+        </predicate>
+      </right>
+    </postconditions>
+  </functions>
+  <functions name="inter">
+    <type xsi:type="robochart:SetType">
+      <domain xsi:type="robochart:AnyType" identifier="X"/>
+    </type>
+    <parameters name="s1">
+      <type xsi:type="robochart:SetType">
+        <domain xsi:type="robochart:AnyType" identifier="X"/>
+      </type>
+    </parameters>
+    <parameters name="s2">
+      <type xsi:type="robochart:SetType">
+        <domain xsi:type="robochart:AnyType" identifier="X"/>
+      </type>
+    </parameters>
+    <postconditions xsi:type="robochart:Equals">
+      <left xsi:type="robochart:ResultExp"/>
+      <right xsi:type="robochart:SetComp">
+        <variables name="x">
+          <type xsi:type="robochart:AnyType" identifier="X"/>
+        </variables>
+        <predicate xsi:type="robochart:And">
+          <left xsi:type="robochart:InExp">
+            <member xsi:type="robochart:RefExp" ref="//@functions.4/@postconditions.0/@right/@variables.0"/>
+            <set xsi:type="robochart:RefExp" ref="//@functions.4/@parameters.0"/>
+          </left>
+          <right xsi:type="robochart:InExp">
+            <member xsi:type="robochart:RefExp" ref="//@functions.4/@postconditions.0/@right/@variables.0"/>
+            <set xsi:type="robochart:RefExp" ref="//@functions.4/@parameters.1"/>
+          </right>
+        </predicate>
+      </right>
+    </postconditions>
+  </functions>
+  <functions name="diff">
+    <type xsi:type="robochart:SetType">
+      <domain xsi:type="robochart:AnyType" identifier="X"/>
+    </type>
+    <parameters name="s1">
+      <type xsi:type="robochart:SetType">
+        <domain xsi:type="robochart:AnyType" identifier="X"/>
+      </type>
+    </parameters>
+    <parameters name="s2">
+      <type xsi:type="robochart:SetType">
+        <domain xsi:type="robochart:AnyType" identifier="X"/>
+      </type>
+    </parameters>
+    <postconditions xsi:type="robochart:Equals">
+      <left xsi:type="robochart:ResultExp"/>
+      <right xsi:type="robochart:SetComp">
+        <variables name="x">
+          <type xsi:type="robochart:AnyType" identifier="X"/>
+        </variables>
+        <predicate xsi:type="robochart:And">
+          <left xsi:type="robochart:InExp">
+            <member xsi:type="robochart:RefExp" ref="//@functions.5/@postconditions.0/@right/@variables.0"/>
+            <set xsi:type="robochart:RefExp" ref="//@functions.5/@parameters.0"/>
+          </left>
+          <right xsi:type="robochart:Not">
+            <exp xsi:type="robochart:InExp">
+              <member xsi:type="robochart:RefExp" ref="//@functions.5/@postconditions.0/@right/@variables.0"/>
+              <set xsi:type="robochart:RefExp" ref="//@functions.5/@parameters.1"/>
+            </exp>
+          </right>
+        </predicate>
+      </right>
+    </postconditions>
+  </functions>
+  <functions name="symetric_diff">
+    <type xsi:type="robochart:SetType">
+      <domain xsi:type="robochart:AnyType" identifier="X"/>
+    </type>
+    <parameters name="s1">
+      <type xsi:type="robochart:SetType">
+        <domain xsi:type="robochart:AnyType" identifier="X"/>
+      </type>
+    </parameters>
+    <parameters name="s2">
+      <type xsi:type="robochart:SetType">
+        <domain xsi:type="robochart:AnyType" identifier="X"/>
+      </type>
+    </parameters>
+    <postconditions xsi:type="robochart:Equals">
+      <left xsi:type="robochart:ResultExp"/>
+      <right xsi:type="robochart:SetComp">
+        <variables name="x">
+          <type xsi:type="robochart:AnyType" identifier="X"/>
+        </variables>
+        <predicate xsi:type="robochart:Not">
+          <exp xsi:type="robochart:ParExp">
+            <exp xsi:type="robochart:Iff">
+              <left xsi:type="robochart:InExp">
+                <member xsi:type="robochart:RefExp" ref="//@functions.6/@postconditions.0/@right/@variables.0"/>
+                <set xsi:type="robochart:RefExp" ref="//@functions.6/@parameters.0"/>
+              </left>
+              <right xsi:type="robochart:InExp">
+                <member xsi:type="robochart:RefExp" ref="//@functions.6/@postconditions.0/@right/@variables.0"/>
+                <set xsi:type="robochart:RefExp" ref="//@functions.6/@parameters.1"/>
+              </right>
+            </exp>
+          </exp>
+        </predicate>
+      </right>
+    </postconditions>
+  </functions>
+  <functions name="Union">
+    <type xsi:type="robochart:SetType">
+      <domain xsi:type="robochart:AnyType" identifier="X"/>
+    </type>
+    <parameters name="A">
+      <type xsi:type="robochart:SetType">
+        <domain xsi:type="robochart:SetType">
+          <domain xsi:type="robochart:AnyType" identifier="X"/>
+        </domain>
+      </type>
+    </parameters>
+    <postconditions xsi:type="robochart:Equals">
+      <left xsi:type="robochart:ResultExp"/>
+      <right xsi:type="robochart:SetComp">
+        <variables name="x">
+          <type xsi:type="robochart:AnyType" identifier="X"/>
+        </variables>
+        <predicate xsi:type="robochart:Exists">
+          <variables name="a">
+            <type xsi:type="robochart:SetType">
+              <domain xsi:type="robochart:AnyType" identifier="X"/>
+            </type>
+          </variables>
+          <suchthat xsi:type="robochart:InExp">
+            <member xsi:type="robochart:RefExp" ref="//@functions.7/@postconditions.0/@right/@predicate/@variables.0"/>
+            <set xsi:type="robochart:RefExp" ref="//@functions.7/@parameters.0"/>
+          </suchthat>
+          <predicate xsi:type="robochart:InExp">
+            <member xsi:type="robochart:RefExp" ref="//@functions.7/@postconditions.0/@right/@variables.0"/>
+            <set xsi:type="robochart:RefExp" ref="//@functions.7/@postconditions.0/@right/@predicate/@variables.0"/>
+          </predicate>
+        </predicate>
+      </right>
+    </postconditions>
+  </functions>
+  <functions name="Inter">
+    <type xsi:type="robochart:SetType">
+      <domain xsi:type="robochart:AnyType" identifier="X"/>
+    </type>
+    <parameters name="A">
+      <type xsi:type="robochart:SetType">
+        <domain xsi:type="robochart:SetType">
+          <domain xsi:type="robochart:AnyType" identifier="X"/>
+        </domain>
+      </type>
+    </parameters>
+    <postconditions xsi:type="robochart:Equals">
+      <left xsi:type="robochart:ResultExp"/>
+      <right xsi:type="robochart:SetComp">
+        <variables name="x">
+          <type xsi:type="robochart:AnyType" identifier="X"/>
+        </variables>
+        <predicate xsi:type="robochart:Forall">
+          <variables name="a">
+            <type xsi:type="robochart:SetType">
+              <domain xsi:type="robochart:AnyType" identifier="X"/>
+            </type>
+          </variables>
+          <suchthat xsi:type="robochart:InExp">
+            <member xsi:type="robochart:RefExp" ref="//@functions.8/@postconditions.0/@right/@predicate/@variables.0"/>
+            <set xsi:type="robochart:RefExp" ref="//@functions.8/@parameters.0"/>
+          </suchthat>
+          <predicate xsi:type="robochart:InExp">
+            <member xsi:type="robochart:RefExp" ref="//@functions.8/@postconditions.0/@right/@variables.0"/>
+            <set xsi:type="robochart:RefExp" ref="//@functions.8/@postconditions.0/@right/@predicate/@variables.0"/>
+          </predicate>
+        </predicate>
+      </right>
+    </postconditions>
+  </functions>
+</robochart:RCPackage>

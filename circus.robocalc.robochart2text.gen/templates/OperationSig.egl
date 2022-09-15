@@ -1,0 +1,25 @@
+[*********************************************************************************
+ * Copyright (c) 2022 University of York and others
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *   William Barnett - initial definition
+ ********************************************************************************]
+[%=operationsig.name%] ( [% for ( param : Parameter in operationsig.parameters ) { %] [%=param.text()%] [% if ( param <> operationsig.parameters.last() ){  %] , [% } %] [% } %] ) [% if(operationsig.terminates) { %] [ terminates ] [% } %]
+[*TODO - postconditions*]
+[*TODO - preconditions*]
+[%  
+@template
+operation Parameter text(){ %] [%=self.name%] : [%
+     var tplType: Template = TemplateFactory.load("../templates/Type.egl"); 
+	 
+	 tplType.populate("type", self.type);
+	 out.print( tplType.process() );
+ } %]	
+[*TODO - initial*]
+[*TODO - expression*]

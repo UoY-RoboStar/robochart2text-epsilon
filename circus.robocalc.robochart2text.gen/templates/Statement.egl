@@ -1,0 +1,83 @@
+[*********************************************************************************
+ * Copyright (c) 2022 University of York and others
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *   William Barnett - initial definition
+ ********************************************************************************]
+[%
+	var tplExpression: Template = TemplateFactory.load("../templates/Expression.egl"); 
+	var tplAssignable: Template = TemplateFactory.load("../templates/Assignable.egl"); 
+	var tplStatement: Template = TemplateFactory.load("../templates/Statement.egl"); 
+	var tplTrigger: Template = TemplateFactory.load("../templates/Trigger.egl"); 
+	
+//SendEvent
+if( statement.isTypeOf(SendEvent) ){
+	var sendevent = statement;
+ 	tplTrigger.populate("trigger", sendevent.trigger); out.print( tplTrigger.process() );
+ 	
+//Assignment
+} else if (statement.isTypeOf(Assignment)){
+	var assignemnt = statement;
+	
+	// left = right
+	tplAssignable.populate("assignable", assignemnt.left); out.print( tplAssignable.process() );
+ 	out.print(" = ");
+ 	tplExpression.populate("expression", assignemnt.right); out.print( tplExpression.process() );
+
+//SeqStatement
+} else if (statement.isTypeOf(SeqStatement) ) {
+	var seq = statement;
+	
+	for (stt: RoboChart!Statement in seq.statements) {
+		tplStatement.populate("statement", stt); out.print( tplStatement.process() );
+		
+		if (hasMore){
+			out.print("; ");
+		}
+	}
+
+//ClockReset
+} else if (statement.isTypeOf(ClockReset) ) {
+	var clockreset = statement;	
+	out.print("# " + clockreset.clock.name + " "); 
+
+
+//Skip
+} else if (statement.isTypeOf(Skip) ) {
+%]skip [%
+
+//IfStmt
+} else if (statement.isTypeOf(IfStmt) ) {
+	var ifstmt = statement;	
+	%]if [% tplExpression.populate("expression", ifstmt.expression); out.print( tplExpression.process() );  %] then [% 
+	    out.println();
+		tplStatement.populate("statement", ifstmt.then); out.print( tplStatement.process() );
+		out.println();
+		
+	if ( ifstmt.`else`.isDefined() ){
+		%]else [% 
+		out.println();
+		tplStatement.populate("statement", ifstmt.`else`); out.print( tplStatement.process() );
+		out.println();
+	}
+	%]end [%
+	
+// ParStmt
+} else if (statement.isTypeOf(ParStmt) ) {
+	var parStmt = statement;
+	tplStatement.populate("statement", parStmt.stmt); out.print( tplStatement.process() );
+	
+} else {
+	%]// TODO generation support for [%=statement.type.name%]. [% 
+}
+
+%]
+[*call*][*TODO*]
+[*timedstatement*][*TODO*]
+[*wait*][*TODO*]

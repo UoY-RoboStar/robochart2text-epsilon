@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="ASCII"?>
+<robochart:RCPackage xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:robochart="http://www.robocalc.circus/RoboChart" name="modules::controllerref">
+  <controllers name="Control"/>
+  <modules name="System">
+    <nodes xsi:type="robochart:ControllerRef" name="ctrl_ref0" ref="//@controllers.0"/>
+  </modules>
+</robochart:RCPackage>

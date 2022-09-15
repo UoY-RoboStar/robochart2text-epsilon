@@ -1,0 +1,15 @@
+package statemachines::twostatesandtransitionactionguardand
+
+stm StmA {
+	var b1:boolean, b2:boolean, b3:boolean
+	state s0 {
+	}
+	state s1 {
+	}
+	transition s0tos1 {
+		from s0
+		to s1
+		condition b1 /\ b2 /\ b3
+	}
+}
+

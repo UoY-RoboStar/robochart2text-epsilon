@@ -1,0 +1,39 @@
+[*********************************************************************************
+ * Copyright (c) 2022 University of York and others
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *   William Barnett - initial definition
+ ********************************************************************************]
+[% 
+	var tplExpression: Template = TemplateFactory.load("../templates/Expression.egl"); 
+
+   if ( trigger._type = TriggerType#SIMPLE ){
+       out.print( trigger.event.name );
+       
+   } else if ( trigger._type = TriggerType#INPUT ) {
+       out.print( trigger.event.name + " ? " + trigger.parameter.name);
+       
+   } else if ( trigger._type = TriggerType#OUTPUT ) { 
+		out.print( trigger.event.name + " ! ") ; 
+		
+		if(trigger.parameter.isDefined()){
+			out.print(trigger.parameter.name); 
+			
+		} else if (trigger.value.isDefined()) {
+			tplExpression.populate("expression", trigger.value);
+			out.print( tplExpression.process() );
+		} 
+		
+   } else if ( trigger._type = TriggerType#SYNC ) {
+       //TODO
+       
+   } else {
+   		// EMPTY nothing to do
+   }
+%] 

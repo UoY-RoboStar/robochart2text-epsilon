@@ -1,0 +1,355 @@
+<!-- 
+ ******************************************************************************
+ * Copyright (c) 2022 University of York and others
+ *
+ * This program and the accompanying materials are made available under the
+ * terms of the Eclipse Public License 2.0 which is available at
+ * http://www.eclipse.org/legal/epl-2.0.
+ *
+ * SPDX-License-Identifier: EPL-2.0
+ *
+ * Contributors:
+ *   William Barnett - initial definition
+ ****************************************************************************** -->
+
+<!-- Unit tests for RoboChart2Text -->
+<project basedir="..">
+	<path id="workspacePath" location=".." />
+	<pathconvert property="workspace" refid="workspacePath"/>
+	<property name="ra.project" value="${workspace}/roboarch/circus.robocalc.roboarch.parent" />
+
+
+
+	<!-- TEST MODELS -->
+	<property name="lib.location" location="${workspace}/RoboChart_lib/models" />
+	<property name="models.location" location="${workspace}/RoboChart_Test_Input/models" />
+
+	
+	<property name="rc.model.core" location="${lib.location}/core.model" />
+	
+	<property name="rc.model.emptypackage1" location="${models.location}/emptypackage1.model" />
+	<property name="rc.model.namedpackage" location="${models.location}/namedpackage.model" />
+	<property name="rc.model.namedsubpackage" location="${models.location}/namedsubpackage.model" />
+	<property name="rc.model.controllers-empty" location="${models.location}/controllers-empty.model" />
+	<property name="rc.model.platforms-empty" location="${models.location}/platforms-empty.model" />
+	<property name="rc.model.statemachines-empty" location="${models.location}/statemachines-empty.model" />
+	<property name="rc.model.types-primitive" location="${models.location}/types-primitive.model" />
+	<property name="rc.model.types-recordthreefields" location="${models.location}/types-recordthreefields.model" />
+	<property name="rc.model.types-enumerationfourliterals" location="${models.location}/types-enumerationfourliterals.model" />
+	<property name="rc.model.interfaces-empty" location="${models.location}/interfaces-empty.model" />
+	<property name="rc.model.interfaces-fourevents" location="${models.location}/interfaces-fourevents.model" />
+	<property name="rc.model.interfaces-twooperationsonevar" location="${models.location}/interfaces-twooperationsonevar.model" />
+	<property name="rc.model.modules-empty" location="${models.location}/modules-empty.model" />
+	<property name="rc.model.modules-controllerref" location="${models.location}/modules-controllerref.model" />
+	<property name="rc.model.modules-roboticplatformref" location="${models.location}/modules-roboticplatformref.model" />
+	<property name="rc.model.controllers-statemachineref" location="${models.location}/controllers-statemachineref.model" />
+	<property name="rc.model.controllers-twowithconnections" location="${models.location}/controllers-twowithconnections.model" />
+	<property name="rc.model.statemachines-twostatesandtransitions" location="${models.location}/statemachines-twostatesandtransitions.model" />
+	<property name="rc.model.statemachines-twostatesandtransitionsinputtrigger" location="${models.location}/statemachines-twostatesandtransitionsinputtrigger.model" />
+	<property name="rc.model.statemachines-twostatesandtransitionactionguardand" location="${models.location}/statemachines-twostatesandtransitionactionguardand.model" />
+	<property name="rc.model.statemachines-twostatesandtransitionactionevent" location="${models.location}/statemachines-twostatesandtransitionactionevent.model" />
+	<property name="rc.model.controllers-onewithinterfaces" location="${models.location}/controllers-onewithinterfaces.model" />
+	<property name="rc.model.statemachines-compositestate" location="${models.location}/statemachines-compositestate.model" />
+	<property name="rc.model.types-set" location="${models.location}/types-set.model" />
+	<property name="rc.model.types-seq" location="${models.location}/types-seq.model" />
+	<property name="rc.model.types-product" location="${models.location}/types-product.model" />
+	<property name="rc.model.importDependee" location="${models.location}/importDependee.model" />
+	<property name="rc.model.importDependant" location="${models.location}/importDependant.model" />
+			
+	
+	<property name="generated.text.directory" value="gen" />
+	<property name="generated.text.location" location="${basedir}/${generated.text.directory}" />
+
+	
+	<property name="expected.text.location" location="${workspace}/RoboChart_Test_Input" />
+	
+	<property name="rc.metamodel.uri" value="http://www.robocalc.circus/RoboChart" />
+
+	<echo>  RoboChart Metamodel uri: ${rc.metamodel.uri}		</echo>
+	<echo>  RC input model location:  ${models.location}		</echo>
+	<echo>  Expected text location:  ${expected.text.location}		</echo>
+	<echo>  Generated text location:  ${generated.text.location}	</echo>
+
+
+	<!-- UNIT TESTS -->
+	<property name="tests.location" location="${basedir}/tests"/>
+	<property name="util.eunit.location" location="${tests.location}/util.eunit"/>
+	<property name="robochart2text.eunit.location" location="${tests.location}/robochart2text.eunit"/>
+
+
+	<!-- CLEAN TARGETS -->
+	<target name="init" description="Cleans generated text destination folder.">
+		<delete includeemptydirs="true">
+		  <fileset dir="${generated.text.directory}" includes="**/*"/>
+		</delete>
+		<echo message="Previously generated files deleted." level="info"/>
+	</target>
+	
+	
+	<!-- EUNIT TARGETS -->
+	<target name="robochart2text" description="Runs the unit test.">
+		
+		<epsilon.eunit src="${util.eunit.location}" failOnErrors="false">
+		</epsilon.eunit>
+		
+		<!-- The @models annotation is used in the eunit file to load the input models. -->
+		<epsilon.eunit src="${robochart2text.eunit.location}" failOnErrors="false">
+			<parameter name="expectedtextdir" value="${expected.text.location}"/>
+			<parameter name="generatedtextdir" value="${generated.text.location}"/>
+		</epsilon.eunit>
+		
+	</target>
+
+
+	<!-- MODEL LOADING TARGETS -->
+	<target name="load-models" description="Load RoboChart models for testing.">
+
+		<epsilon.emf.loadModel name="Core"
+			modelFile="${rc.model.core}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>
+		
+		<epsilon.emf.loadModel name="NamedPackage"
+			modelFile="${rc.model.namedpackage}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>
+		
+		<epsilon.emf.loadModel name="EmptyPackage1"
+			modelFile="${rc.model.emptypackage1}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>
+		
+		<epsilon.emf.loadModel name="NamedSubPackage"
+			modelFile="${rc.model.namedsubpackage}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>
+		
+		<epsilon.emf.loadModel name="Controllers-Empty"
+			modelFile="${rc.model.controllers-empty}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>
+		
+		<epsilon.emf.loadModel name="Platforms-Empty"
+			modelFile="${rc.model.platforms-empty}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>
+		
+		<epsilon.emf.loadModel name="StateMachines-Empty"
+			modelFile="${rc.model.statemachines-empty}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>
+
+		<epsilon.emf.loadModel name="Types-Primitive"
+			modelFile="${rc.model.types-primitive}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>
+		
+		<epsilon.emf.loadModel name="Types-RecordThreeFields"
+			modelFile="${rc.model.types-recordthreefields}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>
+
+		<epsilon.emf.loadModel name="Types-EnumerationFourLiterals"
+			modelFile="${rc.model.types-enumerationfourliterals}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>
+
+		<epsilon.emf.loadModel name="Interfaces-Empty"
+			modelFile="${rc.model.interfaces-empty}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>
+		
+		<epsilon.emf.loadModel name="Interfaces-FourEvents"
+			modelFile="${rc.model.interfaces-fourevents}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>
+				
+		<epsilon.emf.loadModel name="Interfaces-TwoOperationsOneVar"
+			modelFile="${rc.model.interfaces-twooperationsonevar}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>
+
+		<epsilon.emf.loadModel name="Modules-Empty"
+			modelFile="${rc.model.modules-empty}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>
+		
+		<epsilon.emf.loadModel name="Modules-ControllerRef"
+			modelFile="${rc.model.modules-controllerref}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>
+
+		<epsilon.emf.loadModel name="Modules-RoboticPlatformRef"
+			modelFile="${rc.model.modules-roboticplatformref}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>
+		
+		<epsilon.emf.loadModel name="Controllers-StateMachineRef"
+			modelFile="${rc.model.controllers-statemachineref}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>
+
+		<epsilon.emf.loadModel name="Controllers-TwoWithConnections"
+			modelFile="${rc.model.controllers-twowithconnections}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>
+
+		<epsilon.emf.loadModel name="StateMachines-TwoStatesAndTransitions"
+			modelFile="${rc.model.statemachines-twostatesandtransitions}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>
+
+		<epsilon.emf.loadModel name="StateMachines-TwoStatesAndTransitionsInputTrigger"
+			modelFile="${rc.model.statemachines-twostatesandtransitionsinputtrigger}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>
+
+		<epsilon.emf.loadModel name="StateMachines-TwoStatesAndTransitionActionEvent"
+			modelFile="${rc.model.statemachines-twostatesandtransitionactionevent}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>
+		
+		<epsilon.emf.loadModel name="StateMachines-TwoStatesAndTransitionActionGuardAnd"
+			modelFile="${rc.model.statemachines-twostatesandtransitionactionguardand}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>
+		
+		<epsilon.emf.loadModel name="Controllers-OneWithInterfaces"
+			modelFile="${rc.model.controllers-onewithinterfaces}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>		
+		
+		<epsilon.emf.loadModel name="StateMachines-CompositeState"
+			modelFile="${rc.model.statemachines-compositestate}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>	
+		
+		<epsilon.emf.loadModel name="Types-Set"
+			modelFile="${rc.model.types-set}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>	
+		
+		<epsilon.emf.loadModel name="Types-Seq"
+			modelFile="${rc.model.types-seq}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>	
+				
+		<epsilon.emf.loadModel name="Types-Product"
+			modelFile="${rc.model.types-product}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>	
+				
+		
+		<epsilon.emf.loadModel name="ImportDependee"
+			modelFile="${rc.model.importDependee}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"/>	
+		
+		<epsilon.emf.loadModel name="ImportDependant"
+			modelFile="${rc.model.importDependant}" 
+			metamodelUri="${rc.metamodel.uri}"
+			read="true" 
+			store="false"
+			expand="true"
+			cached="false"
+		/>	
+		
+		
+	</target>
+
+	
+
+	<!-- MODEL MANAGEMENT TARGETS -->
+	<target name="rc2txt" description="Runs the RoboChart to Text generator.">
+		<epsilon.egl src="${basedir}/scripts/robochart2text.egx">
+			<model ref="RoboChart"/>
+			<parameter name="baseOuputLocation" value="../gen"/>
+			<parameter name="modelNameAsSubDir" value="false"/>
+		</epsilon.egl>
+	</target>
+
+</project>
